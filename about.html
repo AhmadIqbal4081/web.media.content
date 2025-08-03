@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+.profile-container {
+  max-width: 400px;
+  background: rgb(255, 211, 211);
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  opacity: 90%;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+h2 {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 14px;
+  color: #333;
+[3:01 AM, 8/3/2025] ChatGPT: }
+
+.contact-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #2dc0ac;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.contact-btn:hover{
+            color:rgb(0, 0, 0);
+            background-color:rgb(223, 245, 201);
+            border: 2px solid black;
+        }
+.video-bg {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+    }
+     a{
+            text-decoration: none;
+            color: black;
+        }
+  </style>
+</head>
+<body>
+
+    <video autoplay muted loop class="video-bg">
+    <source src="3.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+  <div class="profile-container">
+    <img src="pic.jpg" alt="My Photo" class="profile-img" />
+    <h1>Hi! I am Ahmad Iqbal</h1>
+    <h2>Web Developer</h2>
+    <p>
+      I am a passionate Web Developer with experience in HTML, CSS, and JavaScript. I enjoy crafting modern, responsive websites and constantly learning new web technologies. am a dedicated and innovative Web Developer with a deep passion for building responsive, user-centric websites and applications. With a strong foundation in HTML, CSS, JavaScript, and modern frameworks, I bring creative ideas to life with precision and efficiency. I have a keen eye for design aesthetics and functionality, ensuring that every project I work on is both visually appealing and technically sound.
+
+I thrive in dynamic environments and am always eager to explore the latest trends in web development, including progressive web apps, UI/UX best practices, and backend integration. My problem-solving skills, attention to detail, and commitment to quality help me deliver high-performing digital solutions.
+
+Whether I'm creating personal portfolios, business websites, or complex applications, I approach every project with professionalism and creativity, aiming to deliver impactful and seamless user experiences.
+    </p>
+  
+    <a href="pro.html" class="contact-btn">Click here to go back</a>
+</div>
+</body>
+</html>
