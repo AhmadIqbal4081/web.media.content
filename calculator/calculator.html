@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+        <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- Calculator -->
+
+    <div class="con">
+        <div class="cal">
+            <h1>Calculator</h1>
+
+            <form action="calculator.html">
+            <label for="text">Calculator :</label>
+            <input type="text" placeholder="Enter first number" id="input1">
+            <input type="text" placeholder="Enter second number" id="input2"><br>
+            <label for="text">Choose operator :</label>
+            <input type="text" placeholder="1(+),2(-),3(*),4(/)" id="input3">
+            <button id="button"type="submit" >Click</button>
+            </form>
+
+        </div>
+        <div id="result"></div>
+    </div>
+
+
+    <script>
+        const button = document.getElementById('button');
+        const input = document.getElementById('input');
+
+        button.addEventListener('click', () => {
+            event.preventDefault();
+
+            const num1 = parseFloat(document.getElementById('input1').value);
+            const num2 = parseFloat(document.getElementById('input2').value);
+            const operator = document.getElementById('input3').value;
+            
+            if (operator === '1') {
+                result = num1 + num2;
+            } else if (operator === '2') {
+                result = num1 - num2;
+            } else if (operator === '3') {
+                result = num1 * num2;
+            } else if (operator === '4') {
+                result = num1 / num2;
+            } else {
+                result = 'Invalid operator';
+            }
+
+            document.getElementById('result').innerText = `Result: ${result}`;
+        });
+    </script>
+</body>
+</html>
