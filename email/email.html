@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="con">
+        
+        <div class="h">
+            <h1>Email Validator</h1>
+        </div>
+
+        <div class="form">
+            <label for="title">Enter your email :</label>
+            <input type="text" placeholder="Enter your email" id="input1">
+            <br>
+            <label for="title">Enter your password :</label>
+            <input type="text" placeholder="Enter password" id="input2">
+        </div>
+
+        <button type="submit" id="button">Login</button>
+        <button class="b2">forgot password</button>
+        
+        <div id="result" class="result""></div>
+    </div>
+    <script>
+        const button = document.getElementById('button');
+        const result = document.getElementById('result');
+        const input1 = document.getElementById('input1');
+        const input2 = document.getElementById('input2');
+        button.addEventListener('click', () => {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            const email = input1.value;
+            const password = input2.value;
+
+
+            // lenth of password must be greater than 6
+            if (password.length < 6) {
+                result.innerText = 'Password must be at least 6 characters long.';
+                return;
+            }
+            // Regular expression for basic email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailPattern.test(email)) {
+                result.innerText = 'Login successful.';
+                nextpage = window.location.href = "https://www.linkedin.com/feed/";
+                return nextpage;
+            } else {
+                result.innerText = 'Invalid email address.';
+            }
+        });
+
+    </script>
+</body>
+</html>
