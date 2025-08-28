@@ -1,0 +1,42 @@
+body {
+    font-family: "Brush Script MT", cursive;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+input {
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    padding: 10px 20px;
+    border: none;;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    transition: 1s ;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: rgb(236, 205, 205);
+    color: rgb(0, 0, 0);
+}
+#result {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.con {
+    max-width: 400px;
+    /* background: rgb(218, 216, 216); */
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    opacity: 100%;
+}

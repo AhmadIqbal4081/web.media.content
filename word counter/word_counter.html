@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="con">
+        <h1>Word Counter</h1>
+        <div>
+            <label for="title">Enter a sentence :</label>
+            <input type="text" placeholder="Enter a sentence" id="input">
+            <button type="submit" id="button">Click</button>
+        </div>
+        <div id="result"></div>    
+    </div>
+    <script>
+        document.getElementById('button').addEventListener('click', function() {
+            const input = document.getElementById('input').value;
+            const wordCount = input.trim().split(/\s+/).filter(word => word.length > 0).length;
+            document.getElementById('result').innerText = `Word Count: ${wordCount}`;
+        });
+    </script>
+</body>
+</html>
