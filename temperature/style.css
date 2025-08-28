@@ -1,0 +1,51 @@
+
+        body {
+            font-family: "Brush Script MT", cursive;
+            margin: 20px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            background-image: url(tem2.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            
+        }
+        input {
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;;
+            background-color: rgb(163, 207, 207);
+            transition: 1s ;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .con {
+            max-width: 400px;
+            /* background: rgb(218, 216, 216); */
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            opacity: 100%;
+        }
+        .img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }

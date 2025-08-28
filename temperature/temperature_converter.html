@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- farhenhite to celcius -->
+    <div class="con">
+        <img src="tem.jpg" class="img">
+        
+        <h1>Farhenhite to Celcius</h1>
+        <form action="temperature_converter.html">
+            <label for="text">Temprature :</label>
+            <input type="text" placeholder="Enter temperature" id="input">
+            <button id="button"type="submit" >Click</button>
+        </form>    
+        <div id="result">
+            
+        </div>
+    </div>
+    <script>
+        const button = document.getElementById('button');
+        const result = document.getElementById('result');
+        
+        button.addEventListener('click', function() {
+
+            event.preventDefault(); // Prevent the default form submission behavior
+            
+            const input = document.getElementById('input').value;
+            const celsius = (input - 32) * 5/9;
+            result.textContent = `The temperature in Celsius is ${celsius.toFixed(2)} °C`;
+        });
+    </script>
+</body>
+</html>
