@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- age calculator -->
+    <div class="con">
+        
+    <h1>AGE</h1>
+    <div>
+        <label for="title">Enter your age :</label>
+        <input type="text" placeholder="Enter your birth year" id="input">
+        <button type="submit" id="button">Click</button>
+    </div>
+    <div id="result">
+
+    </div>
+    </div>
+    <script>
+        const button = document.getElementById('button');
+        const result = document.getElementById('result');
+        
+        button.addEventListener('click', function() {
+             event.preventDefault(); // Prevent the default form submission behavior
+
+             const input = document.getElementById('input').value;
+             if(input < 2025 && input > 0)
+             {
+             const age = 2025 - parseInt(input);
+             result.textContent = `You are ${age.toFixed(0)} years old`;
+             }
+             else
+             {
+                result.textContent = `Invalid input ......`;
+             }
+
+        })
+    </script>
+
+</body>
+</html>
