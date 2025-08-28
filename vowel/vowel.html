@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="con">
+        <h1>Vowel or Consonant</h1>
+        <div>
+            <label for="title">Enter a letter :</label>
+            <input type="text" placeholder="Enter a letter" id="input">
+            <button type="submit" id="button">Click</button>
+        </div>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('button').addEventListener('click', function() {
+            const letter = document.getElementById('input').value.toLowerCase();
+            const vowels = ['a', 'e', 'i', 'o', 'u'];
+            let result = '';
+
+            if(letter.length !== 1 || !letter.match(/[a-z]/i)) {
+                result = 'Please enter a single alphabet letter.';
+            } else if(vowels.includes(letter)) {
+                result = `${letter} is a Vowel.`;
+            } else {
+                result = `${letter} is a Consonant.`;
+            }
+
+            document.getElementById('result').innerText = result;
+        });
+    </script>
+</body>
+</html>
