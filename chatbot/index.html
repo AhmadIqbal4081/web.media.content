@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gemini Chatbot — Demo</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#7c3aed; --muted:#98a0b3;
+      --user:#1f2937; --bot:#0b1220;
+    }
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{
+      margin:0; min-height:100vh; background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent 10%),
+      radial-gradient(700px 400px at 90% 90%, rgba(14,165,233,0.06), transparent 10%),
+      var(--bg); color:#e6eef8; display:flex; align-items:center; justify-content:center; padding:32px;
+    }
+    .app{
+      width:100%; max-width:920px; border-radius:16px; box-shadow:0 10px 30px rgba(2,6,23,0.7);
+      overflow:hidden; display:grid; grid-template-columns: 320px 1fr; background:linear-gradient(180deg,#071025aa,#081428aa);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    /* sidebar */
+    .sidebar{padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent); border-right:1px solid rgba(255,255,255,0.02);}
+    .brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+    .logo{
+      height:48px;width:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;
+      box-shadow:0 6px 18px rgba(124,58,237,0.18);
+    }
+    .brand h1{font-size:16px;margin:0}
+    .intro{color:var(--muted);font-size:13px;margin-top:8px}
+
+    .conversations{margin-top:18px;display:flex;flex-direction:column;gap:8px; max-height:56vh; overflow:auto;}
+    .conv{padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer;font-size:14px}
+    .conv.active{background:linear-gradient(90deg,rgba(124,58,237,0.12),rgba(6,182,212,0.04));box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02)}
+
+    /* chat area */
+    .chat{
+      display:flex;flex-direction:column;height:80vh;padding:20px; gap:14px;
+    }
+    .messages{flex:1; overflow:auto;padding-right:8px; display:flex;flex-direction:column; gap:12px;}
+    .msg{max-width:78%; padding:12px 14px;border-radius:12px;line-height:1.45}
+    .msg.user{margin-left:auto;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01)); color:#fff; border:1px solid rgba(255,255,255,0.03)}
+    .msg.bot{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.02)}
+    .meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+    .typing{display:inline-block;height:10px;vertical-align:middle}
+    .typing > span{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;opacity:0.2;animation:dot 1s infinite}
+    .typing > span:nth-child(2){animation-delay:0.15s}
+    .typing > span:nth-child(3){animation-delay:0.3s}
+    @keyframes dot{50%{opacity:1; transform:translateY(-4px)}}
+
+    .composer{display:flex;gap:10px;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.01));}
+    .composer input{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;outline:none}
+    .btn{background:linear-gradient(90deg,var(--accent),#06b6d4);border:none;padding:10px 14px;border-radius:10px;color:white;font-weight:600;cursor:pointer;box-shadow:0 8px 18px rgba(124,58,237,0.18)}
+    .muted{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+    .small{font-size:12px;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:840px){.app{grid-template-columns:1fr} .sidebar{display:none}}
+  </style>
+</head>
+<body>
+  <div class="app" role="application">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">G</div>
+        <div>
+          <h1>Gemini Chat</h1>
+          <div class="intro">A simple demo using Gemini API — prototype only</div>
+        </div>
+      </div>
+
+      <div class="conversations" id="convs">
+        <div class="conv active">New conversation</div>
+      </div>
+
+      <!-- <div style="margin-top:auto" class="small">Tip: for production, use a server-side proxy (see README).</div> -->
+    </aside>
+
+    <main class="chat" aria-live="polite">
+      <div class="messages" id="messages">
+        <div class="msg bot" id="welcome"><div class="meta">Gemini</div>Hello! I’m a demo Gemini-powered bot. Ask me anything.</div>
+      </div>
+
+      <div class="composer" role="form" aria-label="Message composer">
+        <input id="input" placeholder="Type your message..." autocomplete="off" />
+        <button class="btn" id="sendBtn">Send</button>
+      </div>
+
+      <!-- <div class="muted">This demo uses the Gemini REST endpoint. See security note below.</div> -->
+    </main>
+  </div>
+
+  <script>
+    // --------------------
+    // CONFIG
+    // --------------------
+    const GEMINI_API_KEY = "AIzaSyBcaNcY9qGbsu3GFPeyMz0hcfuxRD_jbxU"; // Replace with your API key
+    const MODEL = "gemini-2.5-flash";
+
+    // --------------------
+    // UI helpers
+    // --------------------
+    const messagesEl = document.getElementById("messages");
+    const inputEl = document.getElementById("input");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function appendMessage(content, who = "bot", options = {}) {
+      const div = document.createElement("div");
+      div.className = "msg " + (who === "user" ? "user" : "bot");
+      if (options.meta) {
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = options.meta;
+        div.appendChild(meta);
+      }
+      const text = document.createElement("div");
+      text.className = "text";
+      text.innerHTML = content.replace(/\n/g, "<br>");
+      div.appendChild(text);
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function showTyping() {
+      const t = document.createElement("div");
+      t.className = "msg bot typingWrap";
+      t.innerHTML = '<div class="meta">Gemini</div><div class="typing"><span></span><span></span><span></span></div>';
+      messagesEl.appendChild(t);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return t;
+    }
+
+    // --------------------
+    // Gemini request
+    // --------------------
+    async function callGemini(promptText) {
+      if (!GEMINI_API_KEY) throw new Error("No GEMINI_API_KEY set in the demo.");
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(MODEL)}:generateContent`;
+      const body = {
+        contents: [{ parts: [{ text: promptText }] }]
+      };
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": GEMINI_API_KEY
+        },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error("API error: " + res.status + " " + txt);
+      }
+      const data = await res.json();
+      // ✅ Clean text only
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
+      return text;
+    }
+
+    // --------------------
+    // UI events
+    // --------------------
+    sendBtn.addEventListener("click", sendMessage);
+    inputEl.addEventListener("keydown", (e) => { if (e.key === "Enter") sendMessage(); });
+
+    async function sendMessage() {
+      const value = inputEl.value.trim();
+      if (!value) return;
+      appendMessage(value, "user", { meta: "You :" });
+      inputEl.value = "";
+      let t = showTyping();
+
+      try {
+        const reply = await callGemini(value);
+        t.remove();
+        appendMessage(reply, "bot", { meta: "Gemini :" });
+      } catch (err) {
+        t.remove();
+        appendMessage("Error: " + err.message, "bot", { meta: "Gemini" });
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
